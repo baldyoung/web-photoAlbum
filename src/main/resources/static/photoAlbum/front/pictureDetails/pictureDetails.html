@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>相片详情</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="../../common/template/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="../../common/template/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="../../common/template/css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+
+		<link href="../../common/template/css/animate.css" rel="stylesheet">
+		<link href="../../common/template/css/style.css?v=4.1.0" rel="stylesheet">
+
+		<!-- 全局js -->
+		<script src="../../common/template/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../common/template/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="../../common/js/global.js"></script>
+		<!-- blueimp gallery -->
+		<script src="../../common/template/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+		<!-- layerDate plugin javascript -->
+		<script src="../../common/template/js/plugins/layer/laydate/laydate.js"></script>
+		<!-- sweetalert相关 -->
+		<link href="../../common/template/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<script src="../../common/template/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+		<!-- 自定义js -->
+		<script src="js/pictureDetails.js"></script>
+
+		<style>
+
+		</style>
+
+	</head>
+
+	<body class="gray-bg">
+		<div id="commonTitle"></div>
+
+		<div class="wrapper wrapper-content no-padding full-height badge-white">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<!--<div class="ibox-title">
+							<h5></h5>
+						</div>-->
+						<div>
+							<div class="ibox-content no-padding border-left-right">
+								<img id="pictureURL" alt="image" class="img-responsive" src="">
+							</div>
+
+							<div  class="ibox-content " style=" border-bottom: 2px solid #e7eaec;">
+								<h5 id="labelDisplayArea"><strong>标签</strong></h5>
+								
+								<button type="button" data-toggle="modal" data-target="#addTipWindow" class="btn btn-circle" style="color:#FFB733; background:#6699FF; "><i class="fa fa-tags"></i></button>
+							</div>
+
+							<div class="ibox-content " style=" border-bottom: 2px solid #e7eaec;">
+								<h5><strong>时间刻度</strong></h5>
+								<form class="form-horizontal m-t">
+									<div class="form-group">
+										<div class="col-sm-12">
+											<input id="updateDateTimeText" readonly="" class="form-control layer-date" >
+											<label class="laydate-icon inline demoicon" onclick="laydate({elem: '#updateDateTimeText', format: 'YYYY-MM-DD hh:mm:ss', istime: true,});"></label>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div class="ibox-content " style=" border-bottom: 2px solid #e7eaec;">
+								<h5><strong>操作</strong></h5>
+								<div >
+									<button onclick="Module.deleteThis()" class="btn btn-outline btn-warning dim pull-right" type="button">
+										<i class="fa fa-warning"></i>删除
+                    				</button>
+                    				
+                    				<button onclick="Module.updateData()" class="btn btn-outline btn-primary dim " type="button">
+										<i class="fa fa-warning"></i>保存变更
+                    				</button>
+								</div>
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="modal inmodal fade" id="addTipWindow" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<!--<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					</div>-->
+					<div class="modal-body no-padding">
+						<div class="ibox-content" style="padding-bottom: 0px;">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<div class="col-sm-12">
+										<input id="labelNameText" type="text" placeholder="标签名称不能超过10个字！" class="form-control">
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer" style="background:#fff; padding-top : 0px;">
+							<button id="closeBtn" type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+							<button onclick="Module.addLabel()" "button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>

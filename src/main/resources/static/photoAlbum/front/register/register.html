@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title> 用户注册</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="../../common/template/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="../../common/template/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="../../common/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="../../common/template/css/animate.css" rel="stylesheet">
+		<link href="../../common/template/css/style.css?v=4.1.0" rel="stylesheet">
+		<!-- 全局js -->
+		<script src="../../common/template/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../common/template/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="../../common/js/global.js"></script>
+		<!-- sweetalert相关 -->
+		<link href="../../common/template/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<script src="../../common/template/js/plugins/sweetalert/sweetalert.min.js"></script>
+		<!-- iCheck -->
+		<script src="../../common/template/js/plugins/iCheck/icheck.min.js"></script>
+		<!-- 自定义js -->
+		<script src="js/register.js"></script>
+			
+			
+		<script>
+			$(document).ready(function() {
+				$('.i-checks').iCheck({
+					checkboxClass: 'icheckbox_square-green',
+					radioClass: 'iradio_square-green',
+				});
+			});
+		</script>
+
+	</head>
+
+	<body class="gray-bg" style="background:#2F4050; ">
+
+		<div class="middle-box text-center loginscreen   animated fadeInDown">
+			<div>
+				<div>
+
+					<h1 class="logo-name" style="color:#CDA869; "><i class="fa fa-moon-o"></i></h1>
+
+				</div>
+				<h3 style="color:#B3D4FD; ">欢迎加入"备忘相册"</h3>
+				<!--<p style="color:#F2F2F2; ">马上创建一个账号吧</p>-->
+				<form class="m-t" role="form">
+					<div class="form-group">
+						<input id="accountText" type="text" class="form-control" placeholder="请输入用户名" required="">
+					</div>
+					<div class="form-group">
+						<input id="passwordText" type="password" class="form-control" placeholder="请输入密码" required="">
+					</div>
+					<div class="form-group">
+						<input id="passwordText_V" type="password" class="form-control" placeholder="请再次输入密码" required="">
+					</div>
+					<div class="form-group">
+						<input id="emailText" type="email" class="form-control" placeholder="邮箱" required="">
+					</div>
+					<div class="form-group">
+						<input id="verifyCodeText" type="text" style="border: 1px solid #cfdadd; width:40%; margin-bottom:8px; padding: 6px 12px;   float:left;" placeholder="邮箱验证码" required="">
+						<button onclick="RegisterModule.sendVerifyCode()" class="btn btn-outline btn-danger dim " type="button" style="width:50%; color:#39AEF5!important;">
+                    	发送验证码
+                    	<i class="fa fa-heart"></i>
+                    </button>
+					</div>
+					<div class="form-group text-left" style="display:none; ">
+						<div class="checkbox i-checks">
+							<label class="no-padding">
+                            <input type="checkbox"><i></i> 我同意注册协议</label>
+						</div>
+					</div>
+					<button onclick="RegisterModule.registerAction()" type="button" class="btn btn-primary block full-width m-b">注 册</button>
+
+					<p class="text-muted text-center"><small>已经有账户了？</small><a href="../login/login.html">点此登录</a>
+					</p>
+
+				</form>
+			</div>
+		</div>
+
+		
+
+	</body>
+
+</html>

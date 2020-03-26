@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>相册管理</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="../../common/template/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="../../common/template/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+		<link href="../../common/template/css/animate.css" rel="stylesheet">
+		<link href="../../common/template/css/style.css?v=4.1.0" rel="stylesheet">
+
+		<!-- 全局js -->
+		<script src="../../common/template/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../common/template/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="../../common/js/global.js"></script>
+		<!-- sweetalert相关 -->
+		<link href="../../common/template/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<script src="../../common/template/js/plugins/sweetalert/sweetalert.min.js"></script>
+		
+		<!-- 自定义js -->
+		<script src="js/addOrUpdateAlbum.js"></script>
+
+	</head>
+
+	<body class="gray-bg">
+		
+		<div id="commonTitle">
+
+		</div>
+		
+		<div class="row">
+			<div id="addArea" class="modal-dialog" hidden="">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>新增相册 <small></small></h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label>名称</label>
+                                        <input id="albumName" type="text" placeholder="请输入相册名称" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>简介</label>
+                                        <textarea id="albumInfo" style="resize: none; width:100%; height:100px; border-color:#cfdadd; "></textarea>
+                                        
+                                    </div>
+                                    <div>
+                                    	<button onclick="GlobalMethod.goBack()" class="btn btn-sm btn-default pull-right m-t-n-xs" style="margin-left:10px;" type="button">
+                                        	<strong>取 消</strong>
+                                        </button>
+                                        <button onclick="AlbumModule.sendData()" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button">
+                                        	<strong>保 存</strong>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		
+			<div id="updateArea" class="modal-dialog" hidden="">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>修改相册 <small></small></h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label>名称</label>
+                                        <input id="albumName_u" type="text" placeholder="请输入相册名称" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>简介</label>
+                                        <textarea id="albumInfo_u" style="resize: none; width:100%; height:100px; border-color:#cfdadd; "></textarea>
+                                        
+                                    </div>
+                                    <div>
+                                    	<button onclick="GlobalMethod.goBack()" class="btn btn-sm btn-default pull-right m-t-n-xs" style="margin-left:10px;" type="button">
+                                        	<strong>取 消</strong>
+                                        </button>
+                                        <button onclick="AlbumModule.sendData()" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button">
+                                        	<strong>保 存</strong>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+		<title> 用户登录</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<link href="../../common/template/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../../common/template/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="../../common/template/css/animate.css" rel="stylesheet">
+		<link href="../../common/template/css/style.css" rel="stylesheet">
+		<link href="../../common/template/css/login.css" rel="stylesheet">
+		
+		<!-- 全局js -->
+		<script src="../../common/template/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../common/template/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="../../common/js/global.js"></script>
+		<!-- sweetalert相关 -->
+		<link href="../../common/template/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<script src="../../common/template/js/plugins/sweetalert/sweetalert.min.js"></script>
+		<!-- 自定义js -->
+		<script src="js/login.js"></script>
+
+	</head>
+
+	<body class="signin">
+		<div class="signinpanel">
+			<div style="text-align: center;">
+
+				<h1 style="color:#CDA869; "><i class="fa fa-moon-o"></i><span style="font-size:19px; font-weight: bold;">备忘相册</span></h1>
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<form >
+						<h4 class="no-margins">登录：</h4>
+						<p class="m-t-md">登录到只属于我的空间</p>
+						<input id="accountText" type="text" class="form-control uname" placeholder="用户名" />
+						<input id="passwordText" type="password" class="form-control pword m-b" placeholder="密码" />
+						<a onclick="OptionModule.forgetPWD()">忘记密码了？</a>
+						<button type="button" class="btn btn-success btn-block" onclick="LoginModule.loginAction()">登录</button>
+					</form>
+				</div>
+			</div>
+			<div class="signup-footer">
+				<div class="pull-left">
+					&copy; 备忘相册
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

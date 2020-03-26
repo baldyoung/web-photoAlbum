@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>照片上传</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="../../common/template/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="../../common/template/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="../../common/template/css/animate.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../../common/template/css/plugins/webuploader/webuploader.css">
+		<link rel="stylesheet" type="text/css" href="../../common/template/css/demo/webuploader-demo.css">
+		<link href="../../common/template/css/style.css?v=4.1.0" rel="stylesheet">
+
+		<!-- 全局js -->
+		<script src="../../common/template/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../common/template/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="../../common/js/global.js"></script>
+
+		<!-- layerDate plugin javascript -->
+		<script src="../../common/template/js/plugins/layer/laydate/laydate.js"></script>
+		<!-- Web Uploader -->
+		<script type="text/javascript">
+			// 添加全局站点信息
+			var BASE_URL = '../../common/template/js/plugins/webuploader';
+		</script>
+		<script src="../../common/template/js/plugins/webuploader/webuploader.min.js"></script>
+		<!-- sweetalert相关 -->
+		<link href="../../common/template/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<script src="../../common/template/js/plugins/sweetalert/sweetalert.min.js"></script>
+		
+		<!-- 自定义js -->
+		<script src="js/updatePictures.js"></script>
+		<style>
+			.cursorPointer {
+				cursor: pointer;
+			}
+			
+			.cursorDefault {
+				cursor: default;
+			}
+			
+			.subBtn {
+				background: #00b7ee;
+    			color: #fff;
+    			border-color: transparent;
+			}
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div id="commonTitle"></div>
+
+		<div class="wrapper wrapper-content animated fadeIn no-padding">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox ">
+
+						<div class="ibox-content " style=" border-bottom: 2px solid #e7eaec;">
+							<h5 ><strong>相册</strong></h5>
+							<select id="albumSelect" class="form-control m-b" name="" style="height:40px; ">
+                                <option value="-1" >请选择相册</option>
+                            </select>
+						</div>
+
+						<div class="ibox-content " style=" border-bottom: 2px solid #e7eaec;">
+							<h5><strong>时间刻度</strong></h5>
+							<form class="form-horizontal m-t">
+								<div class="form-group">
+									<div class="col-sm-10">
+										<input readonly="" class="form-control layer-date" id="updateDateTimeText" placeholder="非必填，默认是当前时间">
+										<label class="laydate-icon inline demoicon" onclick="laydate({elem: '#updateDateTimeText', format: 'YYYY-MM-DD hh:mm:ss', istime: true});"></label>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						<div class="ibox-content " style=" border-bottom: 2px solid #e7eaec;">
+							<h5 id="labelFlag"><strong>标签</strong></h5>
+							<button type="button" data-toggle="modal" data-target="#addTipWindow" class="btn btn-circle" style="color:#FFB733; background:#6699FF; "><i class="fa fa-tags"></i></button>
+						</div>
+
+						<div class="ibox-content">
+							<div class="page-container">
+								<h5><strong>照片</strong></h5>
+								<div id="uploader" class="wu-example">
+									<div class="queueList">
+										<div id="dndArea" class="placeholder">
+											<div id="filePicker"></div>
+											<p>或将照片拖到这里，单次最多可选10张</p>
+										</div>
+									</div>
+									<div class="statusBar" style="display:none;">
+										<div class="progress">
+											<span class="text">0%</span>
+											<span class="percentage"></span>
+										</div>
+										<div class="info"></div>
+										<div class="btns">
+											<div id="filePicker2"></div>
+											<!--<div class="subBtn" >开始上传</div>-->
+											<button type="button" class="btn btn-primary btn-lg" onclick="Module.submitData()">开始上传</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="modal inmodal fade" id="addTipWindow" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<!--<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					</div>-->
+					<div class="modal-body no-padding">
+						<div class="ibox-content" style="padding-bottom: 0px;">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<div class="col-sm-12">
+										<input id="labelNameText" type="text" placeholder="标签名称不能超过10个字！" class="form-control">
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer" style="background:#fff; padding-top : 0px;">
+							<button id="closeBtn" type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+							<button onclick="Module.addLabelUnit()" type="button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>相册管理</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="../../common/template/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="../../common/template/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+		<link href="../../common/template/css/animate.css" rel="stylesheet">
+		<link href="../../common/template/css/style.css?v=4.1.0" rel="stylesheet">
+
+		<!-- 全局js -->
+		<script src="../../common/template/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../common/template/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="../../common/js/global.js"></script>
+		<!-- sweetalert相关 -->
+		<link href="../../common/template/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<script src="../../common/template/js/plugins/sweetalert/sweetalert.min.js"></script>
+		
+		<!-- 自定义js -->
+		<script src="js/albumManage.js"></script>
+
+		<style>
+			.album-div {
+				text-decoration: none;
+				color: #000;
+				background: #ffc;
+				display: block;
+				height: 210px;
+				width: 210px;
+				padding: 1em;
+				box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+				-webkit-transition: -webkit-transform 0.15s linear;
+				margin-bottom: 10px;
+			}
+			
+			.album-option {
+				position: absolute;
+				right: 10px;
+				bottom: 10px;
+				color: inherit;
+			}
+			
+			.toRight {
+				float: right ! important;
+			}
+			
+			.toCenter {
+				margin: 0 auto;
+			}
+			
+			.cursorPointer {
+				cursor: pointer ! important;
+			}
+			
+			.optionItem {
+				cursor: pointer ! important;
+				float: right ! important;
+				margin-right: 8px;
+			}
+		</style>
+
+	</head>
+
+	<body class="gray-bg">
+
+		<div id="commonTitle">
+
+		</div>
+		<div class="wrapper wrapper-content animated fadeInUp">
+			<div class="row">
+				
+				<div id="addAlbumBtn" class="col-sm-3">
+					<div class="album-div" onclick="GlobalMethod.redirectURL('../addOrUpdateAlbum/addOrUpdateAlbum.html')">
+						<i class="fa fa-plus-square" style="font-size:50px; margin-top:65px; margin-left:68px; cursor:pointer; "></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>

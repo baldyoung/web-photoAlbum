@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>相片浏览</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="../../common/template/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="../../common/template/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="../../common/template/css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+
+		<link href="../../common/template/css/animate.css" rel="stylesheet">
+		<link href="../../common/template/css/style.css?v=4.1.0" rel="stylesheet">
+
+		<!-- 全局js -->
+		<script src="../../common/template/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../common/template/js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="../../common/js/global.js"></script>
+		<!-- blueimp gallery -->
+		<script src="../../common/template/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+		<!-- 自定义js -->
+		<script src="js/pictures.js"></script>
+
+		<style>
+			.lightBoxGallery img {
+				margin: 5px;
+				width: 160px;
+			}
+		</style>
+
+	</head>
+
+	<body class="gray-bg">
+		<div id="commonTitle"></div>
+
+		<div class="wrapper wrapper-content no-padding full-height badge-white">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="ibox float-e-margins">
+
+						<div class="ibox-content">
+							<p>
+								<strong>2020东京迪士尼</strong>
+								<i id="manageBtn" onclick="OptionModule.clickManageBtn()" style="cursor:pointer; font-style:normal; float:right;"><i class="fa fa-square-o"></i> 管理</i>
+							</p>
+
+							<div id="pictureDisplayArea" class="lightBoxGallery">
+								
+								<!--<a href="../../common/template/img/p_big2.jpg" title="图片" data-gallery="">
+									<img src="../../common/template/img/p2.jpg">
+								</a>-->
+
+								<div id="blueimp-gallery" class="blueimp-gallery">
+									<div class="slides"></div>
+									<h3 class="title"></h3>
+									<a class="prev">‹</a>
+									<a class="next">›</a>
+									<a class="close">×</a>
+									<a class="play-pause"></a>
+									<ol class="indicator"></ol>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>

@@ -13,9 +13,11 @@ public interface ImageDao {
 
     Map selectByImageId(@Param("imageId")Integer imageId);
 
-    void insert(@Param("image")Map<String, String> image);
+    void insertImage(@Param("image")Map<String, String> image);
 
-    void update(@Param("image")Map<String, String> image);
+    void insertLink(@Param("link")Map<String, String> link);
+
+   // void updateImage(@Param("image")Map<String, String> image);
 
     void deleteImage(@Param("imageId")Integer imageId);
 

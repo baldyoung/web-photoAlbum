@@ -20,6 +20,33 @@
         WHERE albumId = #{albumId}
     </select>
 
+    <select id="selectByImageId" resultType="map">
+        select
+        <include refid="ImageField"></include>
+        from x_image
+        where imageId = #{imageId}
+    </select>
+
+    <insert id="insertImage" parameterType="map">
+        INSERT INTO x_image(userId, imageFileName)
+        VALUES (#{image.userId}, #{image.imageFileName})
+    </insert>
+
+    <insert id="insertLink" parameterType="map">
+        INSERT INTO x_link_album_image(albumId, imageId)
+        VALUES (#{link.albumId}, #{link.imageId})
+    </insert>
+
+    <delete id="deleteImage" >
+        delete from x_image
+        where imageId = #{imageId}
+    </delete>
+
+    <delete id="deleteLink" >
+        delete from x_link_album_image
+        where imageId = #{imageId}
+    </delete>
+
 
 
 </mapper>

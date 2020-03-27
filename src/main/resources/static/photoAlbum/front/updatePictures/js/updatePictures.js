@@ -28,15 +28,15 @@ var Module = {
 			return test_albumList;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getAlbumList",
+			url: GlobalConfig.serverAddress + "/album/all",
 			type: 'GET',
 			cache: false,
 			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: loginData,
+			data: null,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					targetData = data.data;
 				} else {
 					swal({
@@ -126,7 +126,6 @@ var Module = {
 				});
 			return;
 		}
-
 		uploaderX.upload();
 	}
 }

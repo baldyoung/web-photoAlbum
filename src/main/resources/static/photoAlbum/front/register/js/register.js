@@ -7,7 +7,7 @@ var RegisterModule = {
 
 	},
 	sendVerifyCode: function() {
-		var registerData = RegisterModule.packageData();
+		var registerData = RegisterModule.packageData(0);
 		if (undefined == registerData) {
 			return;
 		}
@@ -20,7 +20,7 @@ var RegisterModule = {
 			return;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "requestVerifyCode",
+			url: GlobalConfig.serverAddress + "/user/requestRegisterVerifyCode",
 			type: 'POST',
 			cache: false,
 			//async: false, //设置同步
@@ -28,7 +28,7 @@ var RegisterModule = {
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: registerData,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					swal({
 						title: "邮件发送成功",
 						text: "请注意查收对应邮箱",
@@ -53,18 +53,18 @@ var RegisterModule = {
 
 	},
 	registerAction: function() {
-		var data = RegisterModule.packageData();
+		var data = RegisterModule.packageData(1);
 		RegisterModule.sendData(data);
 	},
-	packageData: function() {
+	packageData: function(t) {
 		var data = {
-			account: $('#accountText').val(),
-			pwd: $('#passwordText').val(),
-			email: $('#emailText').val(),
+			userAccount: $('#accountText').val(),
+			userPassword: $('#passwordText').val(),
+			userEmail: $('#emailText').val(),
 			pwd_V: $('#passwordText_V').val(),
 			verifyCode: $('#verifyCodeText').val()
 		};
-		if (GlobalMethod.isEmpty(data.account)) {
+		if (GlobalMethod.isEmpty(data.userAccount)) {
 			swal({
 				title: '账户不能为空',
 				text: '',
@@ -72,7 +72,7 @@ var RegisterModule = {
 			});
 			return undefined;
 		}
-		if (GlobalMethod.isEmpty(data.pwd)) {
+		if (GlobalMethod.isEmpty(data.userPassword)) {
 			swal({
 				title: '密码不能为空',
 				text: '',
@@ -80,7 +80,7 @@ var RegisterModule = {
 			})
 			return undefined;
 		}
-		if (data.pwd != data.pwd_V) {
+		if (data.userPassword != data.pwd_V) {
 			swal({
 				title: '两次密码不一样',
 				text: '',
@@ -88,7 +88,7 @@ var RegisterModule = {
 			})
 			return undefined;
 		}
-		if (GlobalMethod.isEmpty(data.email)) {
+		if (GlobalMethod.isEmpty(data.userEmail)) {
 			swal({
 				title: '邮箱不能为空',
 				text: '',
@@ -96,7 +96,7 @@ var RegisterModule = {
 			})
 			return undefined;
 		}
-		if (GlobalMethod.isEmpty(data.verifyCode)) {
+		if (t == 1 && GlobalMethod.isEmpty(data.verifyCode)) {
 			swal({
 				title: '邮箱验证码不能为空',
 				text: '',
@@ -120,7 +120,7 @@ var RegisterModule = {
 			return;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "register",
+			url: GlobalConfig.serverAddress + "/user/register",
 			type: 'POST',
 			cache: false,
 			//async: false, //设置同步
@@ -128,7 +128,7 @@ var RegisterModule = {
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: registerData,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					swal({
 						title: "注册成功",
 						text: "将在3秒后返回登录界面",

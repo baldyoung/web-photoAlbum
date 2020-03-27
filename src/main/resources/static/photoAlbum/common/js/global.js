@@ -5,8 +5,8 @@ var GlobalConfig = {
 		version : 'Version 1.0.00'
 	},
 	pictureRelativePath : '/photoAlbum/common/resource/Img/',
-	currentModel : 'design', // design、dev、test
-	//currentModel: "dev", 
+	//currentModel : 'design', // design、dev、test
+	currentModel: "dev",
 	serverAddress : ''
 };
 

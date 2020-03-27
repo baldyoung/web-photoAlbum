@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baldyoung.photoalbum.common.dao.UserDao">
+
+    <sql id="allField" >
+        userId 'userId', userName 'userName', userAccount 'userAccount', userEmail 'userEmail', userPassword 'userPassword',
+	    userStatus 'userStatus', userInfo 'userInfo', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
+    </sql>
+
+    <select id="selectWithCondition" parameterType="map" resultType="map">
+        SELECT
+        <include refid="allField"></include>
+        FROM x_user
+        <where >
+            <choose>
+                <when test="user.userId != null">
+                    userId = #{user.userId}
+                </when>
+                <when test="user.userAccount != null">
+                    userAccount = #{user.userAccount}
+                </when>
+                <when test="user.email != null">
+                    userEmail = #{user.userEmail}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="map">
+        INSERT INTO x_user (userName, userEmail, userAccount, userPassword)
+        VALUES (#{user.userName}, #{user.userEmail}, #{user.userAccount}, #{user.userPassword})
+    </insert>
+
+    <update id="update" parameterType="map">
+        update x_user
+        set userId = #{user.userId}
+        <if test="user.userName != null">
+            ,userName = #{user.userName}
+        </if>
+        <if test="user.userAccount != null">
+            ,userAccount = #{user.userAccount}
+        </if>
+        <if test="user.userPassword != null">
+            ,userPassword = #{user.userPassword}
+        </if>
+        <if test="user.userEmail != null">
+            ,userEmail = #{user.userEmail}
+        </if>
+        where userId = #{user.userId}
+    </update>
+
+</mapper>

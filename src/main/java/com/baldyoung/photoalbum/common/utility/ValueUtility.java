@@ -1,6 +1,20 @@
 package com.baldyoung.photoalbum.common.utility;
 
+import java.util.Date;
+
 public class ValueUtility {
+
+    public static boolean isAnyEmtpy(Object... objects) {
+        if (null == objects) {
+            return true;
+        }
+        for(Object object : objects) {
+            if (isEmpty(object)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static boolean isEmpty(Object object) {
         if (null == object) {
@@ -23,5 +37,12 @@ public class ValueUtility {
         }
         Integer result = Integer.parseInt(String.valueOf(object));
         return result;
+    }
+
+    public static Date toDate(Object object) {
+        if (null == object || !(object instanceof Date)) {
+            return null;
+        }
+        return (Date)object;
     }
 }

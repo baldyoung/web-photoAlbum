@@ -12,10 +12,10 @@ var LoginModule = {
 	},
 	packageData: function() {
 		var data = {
-			account: $('#accountText').val(),
-			pwd: $('#passwordText').val()
+			user: $('#accountText').val(),
+			password: $('#passwordText').val()
 		};
-		if (GlobalMethod.isEmpty(data.account)) {
+		if (GlobalMethod.isEmpty(data.user)) {
 			swal({
 				title : '账户不能为空',
 				text : '',
@@ -23,7 +23,7 @@ var LoginModule = {
 			})
 			return undefined;
 		}
-		if (GlobalMethod.isEmpty(data.pwd)) {
+		if (GlobalMethod.isEmpty(data.password)) {
 			swal({
 				title : '密码不能为空',
 				text : '',
@@ -53,7 +53,7 @@ var LoginModule = {
 			return;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "login",
+			url: GlobalConfig.serverAddress + "/user/login",
 			type: 'POST',
 			cache: false,
 			//async: false, //设置同步
@@ -61,7 +61,7 @@ var LoginModule = {
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: loginData,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					GlobalMethod.replaceURL('../home/home.html');
 				} else {
 					swal({

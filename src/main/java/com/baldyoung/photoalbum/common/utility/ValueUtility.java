@@ -30,7 +30,6 @@ public class ValueUtility {
     }
 
     public static Integer toInteger(Object object) {
-        System.out.println("toInteger:"+object);
         if (null == object) {
 
             return null;

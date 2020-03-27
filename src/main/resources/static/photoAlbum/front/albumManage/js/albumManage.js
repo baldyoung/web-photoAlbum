@@ -28,15 +28,15 @@ var AlbumModule = {
 			return test_albumList;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getAlbumList",
+			url: GlobalConfig.serverAddress + "/album/all",
 			type: 'GET',
 			cache: false,
 			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: loginData,
+			data: {},
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					targetData = data.data;
 				} else {
 					swal({
@@ -76,17 +76,17 @@ var AlbumModule = {
 						return;
 					}
 					$.ajax({
-						url: GlobalConfig.serverAddress + "deleteAlbum",
+						url: GlobalConfig.serverAddress + "/album/delete",
 						type: 'POST',
 						cache: false,
 						async: false, //设置同步
 						dataType: 'json',
 						contentType: "application/x-www-form-urlencoded;charset=utf-8",
 						data: {
-							id: albumId
+							albumId : albumId
 						},
 						success: function(data) {
-							if (data.result == 'success') {
+							if (data.code == '0') {
 								AlbumModule.init();
 								swal("删除成功！", "", "success");
 							} else {

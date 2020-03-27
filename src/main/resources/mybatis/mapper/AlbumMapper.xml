@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baldyoung.photoalbum.common.dao.AlbumDao">
+
+    <sql id="allField">
+        userId 'userId', albumId 'albumId', albumName 'albumName', albumInfo 'albumInfo', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
+    </sql>
+
+    <select id="selectByUserId" resultType="map">
+        SELECT
+        <include refid="allField"></include>
+        FROM x_album
+        where userId = #{userId}
+    </select>
+
+    <select id="selectByAlbumId" resultType="map">
+        select
+        <include refid="allField"></include>
+        from x_album
+        where albumId = #{albumId}
+    </select>
+
+    <insert id="insert" parameterType="map" >
+        insert into x_album(userId, albumName, albumInfo)
+        values (#{album.userId}, #{album.albumName}, #{album.albumInfo})
+    </insert>
+
+    <update id="update" parameterType="map">
+        update x_album
+        set albumId = #{album.albumId}
+        <if test="album.albumName != null">
+            , albumName = #{album.albumName}
+        </if>
+        <if test="album.albumInfo != null">
+            , albumInfo = #{album.albumInfo}
+        </if>
+        where albumId = #{album.albumId}
+    </update>
+
+    <delete id="delete" >
+        delete from x_album
+        where albumId = #{albumId}
+    </delete>
+
+</mapper>

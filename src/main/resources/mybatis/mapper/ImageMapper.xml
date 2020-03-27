@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baldyoung.photoalbum.common.dao.ImageDao">
+
+    <sql id="ImageField">
+        userId 'userId', imageId 'imageId', imageFileName 'imageFileName', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
+    </sql>
+
+    <sql id="LinkField">
+        linkId 'linkId', albumId 'albumId', imageId 'imageId', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
+    </sql>
+
+    <select id="selectByAlbumId" resultType="map">
+        SELECT
+            a.linkId 'linkId',
+            b.userId 'userId', b.imageId 'imageId', b.imageFileName 'imageFileName',
+            b.updateDateTime 'updateDateTime', b.createDateTime 'createDateTime'
+        FROM x_link_album_image a INNER JOIN x_image b ON a.imageId = b.imageId
+        WHERE albumId = #{albumId}
+    </select>
+
+
+
+</mapper>

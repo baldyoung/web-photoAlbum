@@ -24,7 +24,7 @@ var AlbumModule = {
 	},
 	createAlbumUnitHTML : function(albumInfo) {
 		var html = '<li><div style="cursor:pointer; " ondblclick="AlbumModule.seeTheAlbum(\''+albumInfo.albumId+'\')">';
-			html += '<small><p>'+albumInfo.lastUpdateDateTime+' <i class="fa fa-calendar-plus-o"></i> </p></small>';
+			html += '<small><p>'+albumInfo.createDateTime+' <i class="fa fa-calendar-plus-o"></i> </p></small>';
 			html += '<h4>'+albumInfo.albumName+'</h4>';
 			html += '<p>'+albumInfo.albumInfo+'</p>';
 			html += '<a ><i class="fa fa-photo"></i> '+albumInfo.pictureAmount+'</a></div></li>';
@@ -36,16 +36,24 @@ var AlbumModule = {
 			return test_albumList;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getAlbumList",
+			url: GlobalConfig.serverAddress + "/album/all",
 			type: 'GET',
 			cache: false,
 			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: loginData,
+			data: null,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					targetData = data.data;
+					var i, item, temp;
+					for(i=0; i<targetData.length; i++) {
+						item = targetData[i];
+						temp = item.updateDateTime;
+						item.updateDateTime = temp.substring(0, 10);
+						temp = item.createDateTime;
+						item.createDateTime = temp.substring(0, 10);
+					}
 				} else {
 					swal({
 						title: "获取相册数据失败",

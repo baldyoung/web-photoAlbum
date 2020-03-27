@@ -1,5 +1,7 @@
 package com.baldyoung.photoalbum;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
@@ -12,9 +14,9 @@ import java.io.IOException;
 
 @Order(1)
 @WebFilter(filterName = "piceaFilter", urlPatterns = "/*" , initParams = {
-        @WebInitParam(name = "URL", value = "http://localhost:8080")})
+        @WebInitParam(name = "URL", value = " ")})
 public class GlobalFilter implements Filter {
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private String url;
     /**
      * 可以初始化Filter在web.xml里面配置的初始化参数
@@ -24,8 +26,7 @@ public class GlobalFilter implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        //this.url = filterConfig.getInitParameter("URL");
-        //System.out.println("我是过滤器的初始化方法！URL=" + this.url +  "，生活开始.........");
+        logger.info("photoAlbum >>> 登录拦截构建中...");
     }
 
     /**
@@ -38,15 +39,20 @@ public class GlobalFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        //System.out.println("我是过滤器的执行方法，客户端向Servlet发送的请求被我拦截到了");
-        //HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        //HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        //HttpSession session = httpServletRequest.getSession();
-        //session.setAttribute("managerId", 2);
-        //session.setAttribute("managerType", 0);
-        //session.setAttribute("areaId", 1);
+
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpSession session = httpServletRequest.getSession();
+        if (null == session.getAttribute("userId")) {
+            String url = httpServletRequest.getRequestURI();
+            if (url.equals("") || url.equals("/") || url.contains("login") || url.contains("common")) {
+            } else {
+                logger.warn("photoAlbum >>> 非法访问["+url+"]");
+                httpServletResponse.sendRedirect("/photoAlbum/front/login/login.html");
+                return;
+            }
+        }
         filterChain.doFilter(servletRequest, servletResponse);
-        //System.out.println("我是过滤器的执行方法，Servlet向客户端发送的响应被我拦截到了");
     }
 
     /**

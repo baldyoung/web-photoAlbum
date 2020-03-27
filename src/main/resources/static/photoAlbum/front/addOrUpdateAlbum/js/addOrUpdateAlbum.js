@@ -15,6 +15,8 @@ var AlbumModule = {
 		} else {
 			$('#updateArea').removeAttr('hidden');
 			AlbumModule.status='update';
+			var targetData = AlbumModule.requestData(id);
+			AlbumModule.loadData(targetData);
 		}
 	},
 	packageData : function() {
@@ -45,7 +47,7 @@ var AlbumModule = {
 			return test_albumInfo;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getAlbum",
+			url: GlobalConfig.serverAddress + "/album/albumInfo",
 			type: 'GET',
 			cache: false,
 			async: false, //设置同步
@@ -55,7 +57,7 @@ var AlbumModule = {
 				albumId : id
 			},
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					targetData = data.data;
 				} else {
 					swal({
@@ -84,15 +86,15 @@ var AlbumModule = {
 			return;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getAlbum",
-			type: 'GET',
+			url: GlobalConfig.serverAddress + "/album/add",
+			type: 'POST',
 			cache: false,
 			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: newAlbumInfo,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					swal('保存成功', '', 'success');
 					GlobalMethod.goBack();
 				} else {

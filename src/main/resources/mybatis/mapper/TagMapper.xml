@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baldyoung.photoalbum.common.dao.TagDao">
+
+    <sql id="tagField">
+        tagId 'tagId', userId 'userId', tagName 'tagName', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
+    </sql>
+
+    <insert id="insertTag" parameterType="map">
+        INSERT INTO x_tag(userId, tagName)
+        VALUES (#{param.userId}, #{param.userId})
+    </insert>
+
+    <insert id="insertTagList" >
+        INSERT INTO x_tag(userId, tagName)
+        VALUES
+        <foreach collection="list" index="index" open="" close="" item="item" separator=", ">
+            (#{item.userId}, #{item.userId})
+        </foreach>
+    </insert>
+
+    <select id="selectTagByTagNameAndUserId" resultType="map">
+        SELECT
+        <include refid="tagField"></include>
+        FROM x_tag
+        where tagName = #{tagName}
+        and userId = #{userId}
+    </select>
+
+    <select id="selectTagByUserId" resultType="map">
+        SELECT
+        <include refid="tagField"></include>
+        FROM x_tag
+        where userId = #{userId}
+    </select>
+
+    <delete id="deleteTag" >
+        delete from x_tag
+        where tagId = #{tagId}
+        and userId = #{userId}
+    </delete>
+
+
+
+    <sql id="linkField">
+        linkId 'linkId', tagId 'tagId', imageId 'imageId', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
+    </sql>
+
+    <insert id="insertLink" parameterType="map">
+        INSERT INTO x_link_tag_image(tagId, imageId)
+        VALUES (#{param.tagId}, #{param.imageId})
+    </insert>
+
+    <select id="selectTagByImageId" resultType="map">
+        SELECT
+        <include refid="linkField"></include>
+        FROM x_link_tag_image
+        where imageId = #{imageId}
+    </select>
+
+    <delete id="deleteLink">
+        delete from x_link_tag_image
+        where tagId = #{tagId}
+        and imageId = #{imageId}
+    </delete>
+
+
+
+
+
+</mapper>

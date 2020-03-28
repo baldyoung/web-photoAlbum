@@ -225,7 +225,7 @@ jQuery(function() {
 
 		chunked: true,
 		// server: 'http://webuploader.duapp.com/server/fileupload.php',
-		server: GlobalConfig.serverAddress + 'addPictures',
+		server: GlobalConfig.serverAddress + '/image/add',
 		fileNumLimit: 300,
 		fileSizeLimit: 50 * 1024 * 1024, // 200 M
 		fileSingleSizeLimit: 10 * 1024 * 1024 // 50 M
@@ -490,7 +490,8 @@ jQuery(function() {
 			case 'finish':
 				stats = uploader.getStats();
 				if (stats.successNum) {
-					alert('上传成功');
+					// -------------------------------------------------- 上传成功后会被调用
+					// alert('上传成功');
 				} else {
 					// 没有成功的图片，重设
 					state = 'done';
@@ -557,9 +558,8 @@ jQuery(function() {
 	});
 	//上传成功后调用
 	uploader.on('uploadSuccess', function(file, response) {
-		//console.log("上传成功后，后台返回")
-		//console.log(response)
-		if (response.result == 'success') { //添加商品信息提交成功
+		// ---------------------------------------------------------- 上传完成后调用
+		if (response.code == '0') {
 			swal({
 					title: "上传成功！",
 					text: "",
@@ -574,7 +574,8 @@ jQuery(function() {
 						location.reload();
 					}
 				});
-			// ---------------------------------------------------------- 上传完成后调用
+		} else {
+			swal("上传失败", response.desc, "error");
 		}
 		uploader.removeFile(file);
 
@@ -594,11 +595,12 @@ jQuery(function() {
 		data = $.extend(data, {
 			albumId: Module.picturesInfo.albumId,
 			labelList: list,
-			udpateDateTime: Module.picturesInfo.updateDateTime
+			updateDateTime: Module.picturesInfo.updateDateTime
 		});
 	});
 
 	uploader.onError = function(code) {
+		// ------------------------------------------------------ 出错后会被调用
 		alert('Eroor: ' + code);
 	};
 

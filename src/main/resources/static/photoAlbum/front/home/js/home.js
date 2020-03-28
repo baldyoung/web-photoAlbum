@@ -25,7 +25,7 @@ var AlbumModule = {
 	createAlbumUnitHTML : function(albumInfo) {
 		var html = '<li><div style="cursor:pointer; " ondblclick="AlbumModule.seeTheAlbum(\''+albumInfo.albumId+'\')">';
 			html += '<small><p>'+albumInfo.createDateTime+' <i class="fa fa-calendar-plus-o"></i> </p></small>';
-			html += '<h4>'+albumInfo.albumName+'</h4>';
+			html += '<h4 onclick="AlbumModule.seeTheAlbum(\''+albumInfo.albumId+'\')">'+albumInfo.albumName+'</h4>';
 			html += '<p>'+albumInfo.albumInfo+'</p>';
 			html += '<a ><i class="fa fa-photo"></i> '+albumInfo.pictureAmount+'</a></div></li>';
 		return html;

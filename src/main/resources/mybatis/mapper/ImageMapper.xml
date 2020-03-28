@@ -4,7 +4,7 @@
 <mapper namespace="com.baldyoung.photoalbum.common.dao.ImageDao">
 
     <sql id="ImageField">
-        userId 'userId', imageId 'imageId', imageFileName 'imageFileName', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
+        userId 'userId', imageId 'imageId', imageFileName 'imageFileName', imageInfo 'imageInfo', updateDateTime 'updateDateTime', createDateTime 'createDateTime'
     </sql>
 
     <sql id="LinkField">
@@ -27,7 +27,14 @@
         where imageId = #{imageId}
     </select>
 
-    <insert id="insertImage" parameterType="map">
+    <select id="selectByImageFileName" resultType="map">
+        select
+        <include refid="ImageField"></include>
+        from x_image
+        where imageFileName = #{fileName}
+    </select>
+
+    <insert id="insertImage" parameterType="map" keyColumn="imageId" keyProperty="imageId" useGeneratedKeys="true" >
         INSERT INTO x_image(userId, imageFileName)
         VALUES (#{image.userId}, #{image.imageFileName})
     </insert>

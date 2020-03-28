@@ -36,13 +36,13 @@ var OptionModule = {
 		
 	},
 	createSEEPictureUnitHTML : function(item) {
-		var html = '<a href="../../common/resource/Img/'+item.address+'" title="'+item.title+'" data-gallery="">';
-			html += '<img src="../../common/resource/Img/'+item.simpleAddress+'"></a>';
+		var html = '<a href="../../common/resource/Img/'+item.imageFileName+'" title="'+item.imageInfo+'" data-gallery="">';
+			html += '<img src="../../common/resource/Img/'+item.imageFileName+'"></a>';
 		return html;
 	},
 	createMNGPictureUnitHTML : function(item) {
-		var html = '<a href="../pictureDetails/pictureDetails.html?picture='+item.pictureId+'" title="'+item.title+'" >';
-			html += '<img src="../../common/resource/Img/'+item.simpleAddress+'"></a>';
+		var html = '<a href="../pictureDetails/pictureDetails.html?picture='+item.imageId+'" title="'+item.imageInfo+'" >';
+			html += '<img src="../../common/resource/Img/'+item.imageFileName+'"></a>';
 		return html;
 	},
 	requestData : function() {
@@ -51,15 +51,17 @@ var OptionModule = {
 			return test_pictureList;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getPictureList",
-			type: 'POST',
+			url: GlobalConfig.serverAddress + "/image/list",
+			type: 'GET',
 			cache: false,
-			//async: false, //设置同步
+			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: {},
+			data: {
+				albumId : GlobalMethod.getArgsFromLocationHref("album")
+			},
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					targetData = data.data;
 				} else {
 					swal({

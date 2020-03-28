@@ -9,9 +9,12 @@ import java.util.Map;
 @Repository
 public interface ImageDao {
 
+
     List<Map> selectByAlbumId(@Param("albumId")Integer albumId);
 
     Map selectByImageId(@Param("imageId")Integer imageId);
+
+    Map selectByImageFileName(@Param("fileName")String fileName);
 
     void insertImage(@Param("image")Map<String, String> image);
 

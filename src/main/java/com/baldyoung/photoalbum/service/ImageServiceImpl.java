@@ -33,9 +33,7 @@ public class ImageServiceImpl {
         param.put("imageId", String.valueOf(map.get("imageId")));
         imageDao.insertLink(param);
         Integer userId = toInteger(param.get("userId"));
-        for(String tagName : tagNameList) {
-            //if ()
-        }
+        //tagDao.insertTagList(tagNameList, userId);
     }
 
     public List<Map> getImageListFromAlbum (Integer albumId) {

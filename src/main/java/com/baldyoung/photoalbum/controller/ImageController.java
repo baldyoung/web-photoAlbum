@@ -82,7 +82,7 @@ public class ImageController {
         newImage.put("albumId", String.valueOf(albumId));
         newImage.put("imageInfo", String.valueOf(updateDateTime));
         newImage.put("imageFileName", String.valueOf(imageFileName));
-        imageService.addImage(newImage);
+        //imageService.addImage(newImage);
         return success();
     }
 

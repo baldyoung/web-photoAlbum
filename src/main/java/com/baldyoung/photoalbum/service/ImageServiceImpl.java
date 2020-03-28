@@ -27,13 +27,16 @@ public class ImageServiceImpl {
 
     public void addImage(Map<String, String> param, List<String> tagNameList) {
         Map map ;
+        // 保存圖片
         imageDao.insertImage(param);
         map = imageDao.selectByImageFileName(param.get("imageFileName"));
-        // logger.info(">>>>>>>>"+map.toString());
-        param.put("imageId", String.valueOf(map.get("imageId")));
+        Integer newImageId = toInteger(map.get("imageId"));
+        param.put("imageId", String.valueOf(newImageId));
+        // 將图片与相册关联
         imageDao.insertLink(param);
         Integer userId = toInteger(param.get("userId"));
-        //tagDao.insertTagList(tagNameList, userId);
+        // 将标签与图片关联
+        tagDao.insertTagList(tagNameList, userId, newImageId);
     }
 
     public List<Map> getImageListFromAlbum (Integer albumId) {

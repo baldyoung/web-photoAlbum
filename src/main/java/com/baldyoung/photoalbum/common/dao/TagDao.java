@@ -11,7 +11,12 @@ public interface TagDao {
 
     void insertTag(@Param("param")Map<String, String> param);
 
-    void insertTagList(@Param("list")List<Map<String, String>> list, @Param("userId")Integer userId);
+    void insertTagList(@Param("list")List<String> list, @Param("userId")Integer userId, @Param("imageId")Integer imageId);
+
+    List<Map> selectByImageIdAndUserId(@Param("imageId")Integer imageId, @Param("userId")Integer userId);
+
+    void deleteTag(@Param("tagId")Integer tagId, @Param("userId")Integer userId);
+
 
     // List<Map> selectTagWithCondition(@Param("param")Map<String, String> param);
 
@@ -19,7 +24,7 @@ public interface TagDao {
 
     // List<Map> selectTagByUserId(@Param("userId")Integer userId);
 
-    // void deleteTag(@Param("tagId")Integer tagId, @Param("userId")Integer userId);
+
 
 
 

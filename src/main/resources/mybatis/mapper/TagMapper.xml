@@ -13,10 +13,10 @@
     </insert>
 
     <insert id="insertTagList" >
-        INSERT INTO x_tag(userId, tagName)
+        INSERT INTO x_tag(userId, imageId, tagName)
         VALUES
         <foreach collection="list" index="index" open="" close="" item="item" separator=", ">
-            (#{item.userId}, #{item.userId})
+            (#{userId}, #{imageId}, #{item})
         </foreach>
     </insert>
 
@@ -28,6 +28,18 @@
         and userId = #{userId}
     </select>
 
+    <delete id="deleteTag" >
+        delete from x_tag
+        where tagId = #{tagId}
+        and userId = #{userId}
+    </delete>
+
+
+
+
+
+
+
     <select id="selectTagByUserId" resultType="map">
         SELECT
         <include refid="tagField"></include>
@@ -35,11 +47,7 @@
         where userId = #{userId}
     </select>
 
-    <delete id="deleteTag" >
-        delete from x_tag
-        where tagId = #{tagId}
-        and userId = #{userId}
-    </delete>
+
 
 
 

@@ -149,7 +149,7 @@ public class UserController {
         param.put("userAccount", userAccount);
         param.put("userPassword", userPassword);
         param.put("userId", String.valueOf(userId));
-        String result = userService.register(param);
+        String result = userService.update(param);
         if (null != result) {
             return defeat(result);
         }
@@ -157,7 +157,14 @@ public class UserController {
     }
 
 
-
+    @GetMapping("info")
+    public ResponseResult getUserInfo(HttpSession session) {
+        Integer userId = toInteger(session.getAttribute("userId"));
+        if (null == userId) {
+            return defeat("未登录");
+        }
+        return success(userService.getUserInfo(userId));
+    }
 
 
 

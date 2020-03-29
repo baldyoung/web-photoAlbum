@@ -105,7 +105,8 @@ public class AlbumController {
             return defeat("未登录");
         }
         Map oldAlbum = albumService.getAlbumInfo(albumId);
-        if (null == oldAlbum || null == oldAlbum.get("userId") || !userId.equals(oldAlbum.get("userId"))) {
+        Integer aUserId = toInteger(oldAlbum.get("userId"));
+        if (null == oldAlbum || null == oldAlbum.get("userId") || !userId.equals(aUserId)) {
             return defeat("无效相册");
         }
         Map<String, String> param = new HashMap();

@@ -5,6 +5,7 @@ $(function() {
 });
 
 var Module = {
+	temp : 0,
 	pictureInfo: undefined,
 	init: function() {
 		var pictureId = GlobalMethod.getArgsFromLocationHref("picture");
@@ -20,10 +21,11 @@ var Module = {
 	},
 	loadData: function(data) {
 		Module.pictureInfo = data;
-		$('#pictureURL').attr('src', GlobalConfig.pictureRelativePath + data.address);
-		//
-		$('#updateDateTimeText').val(data.updateDateTime);
-		//var target = $('#labelDisplayArea');
+		//data.labelList = data.tagList;
+		//var temp = data.imageInfo;
+		//data.imageInfo = (undefined != temp) ? temp.substring(0, 10) : "";
+		$('#pictureURL').attr('src', GlobalConfig.pictureRelativePath + data.imageFileName);
+		$('#updateDateTimeText').val(data.imageInfo);
 		var i, item, html;
 		if (data.labelList == undefined) data.labelList = [];
 		data = data.labelList;
@@ -34,27 +36,30 @@ var Module = {
 	},
 	addLabelDisplayUnit: function(item) {
 		var target = $('#labelDisplayArea');
-		var html = '<button id="labelUnit' + item.id + '" type="button" class="btn btn-default disabled" style="cursor:default; margin-right:5px;">';
-		html += '<i class="fa fa-tag" style="color:#FFB733; "></i>' + item.labelName + '<span style="cursor:pointer;" onclick="Module.deleteLabel(\'' + item.id + '\')">&times;</span>';
+		var html = '<button id="labelUnit' + item.tagId + '" type="button" class="btn btn-default disabled" style="cursor:default; margin-right:5px;">';
+		html += '<i class="fa fa-tag" style="color:#FFB733; "></i>' + item.tagName + '<span style="cursor:pointer;" onclick="Module.deleteLabel(\'' + item.tagId + '\')">&times;</span>';
 		html += '</button>';
 		target.after(html);
 	},
-	requestData: function(pictureId) {
-		var targetData = [];
+	requestData: function() {
+		var targetData = {};
 		if ("design" == GlobalConfig.currentModel) {
 			return test_pictureInfo;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getPicture",
-			type: 'POST',
+			url: GlobalConfig.serverAddress + "/image/imageInfo",
+			type: 'GET',
 			cache: false,
-			//async: false, //设置同步
+			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: {},
+			data: {
+				imageId : GlobalMethod.getArgsFromLocationHref("picture")
+			},
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					targetData = data.data;
+					targetData.labelList = targetData.tagList;
 				} else {
 					swal({
 						title: "获取相片数据失败",
@@ -75,16 +80,17 @@ var Module = {
 	},
 	addLabel: function() {
 		var labelInfo = {
-			labelName: $('#labelNameText').val()
+			id : Module.temp ++,
+			tagName: $('#labelNameText').val()
 		};
-		if (GlobalMethod.isEmpty(labelInfo.labelName)) {
+		if (GlobalMethod.isEmpty(labelInfo.tagName)) {
 			swal({
 				title: '标签不能为空',
 				type: 'error'
 			});
 			return undefined;
 		}
-		if (labelInfo.labelName.length > 10) {
+		if (labelInfo.tagName.length > 10) {
 			swal({
 				title: '标签不能超过10个字',
 				type: 'error'
@@ -102,8 +108,17 @@ var Module = {
 		if (undefined == Module.pictureInfo) {
 			return;
 		}
-		Module.pictureInfo.updateDateTime = $('#updateDateTimeText').val();
-
+		Module.pictureInfo.imageInfo = $('#updateDateTimeText').val();
+		var temp = Module.pictureInfo.labelList;
+		var i, item, list=[];
+		for(i=0; i<temp.length; i++) {
+			item = temp[i];
+			list[list.length] = item.tagName
+		}
+		Module.pictureInfo.tagList = list;
+		temp = Module.pictureInfo;
+		var tempLabelList = temp.labelList;
+		temp.labelList = null;
 		if ("design" == GlobalConfig.currentModel) {
 			swal({
 				title: "照片信息保存成功！",
@@ -113,15 +128,15 @@ var Module = {
 			return;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "updatePicture",
+			url: GlobalConfig.serverAddress + "/image/update",
 			type: 'POST',
 			cache: false,
-			//async: false, //设置同步
+			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: Module.pictureInfo,
+			data: temp,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					swal({
 						title: "照片信息保存成功！",
 						text: '',
@@ -143,6 +158,7 @@ var Module = {
 				});
 			}
 		});
+		Module.pictureInfo.labelList = tempLabelList;
 	},
 	deleteLabel: function(id) {
 		$('#labelUnit' + id).remove();
@@ -168,17 +184,17 @@ var Module = {
 			return;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "deletePicture",
+			url: GlobalConfig.serverAddress + "/image/delete",
 			type: 'POST',
 			cache: false,
-			//async: false, //设置同步
+			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: {
-				pictureId: Module.pictureInfo.pictureId
+				imageId: Module.pictureInfo.imageId
 			},
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					swal({
 						title: '删除成功',
 						type: 'success'

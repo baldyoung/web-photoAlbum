@@ -13,11 +13,19 @@
 
     <select id="selectByAlbumId" resultType="map">
         SELECT
-            a.linkId 'linkId',
             b.userId 'userId', b.imageId 'imageId', b.imageFileName 'imageFileName',
             b.updateDateTime 'updateDateTime', b.createDateTime 'createDateTime'
         FROM x_link_album_image a INNER JOIN x_image b ON a.imageId = b.imageId
         WHERE albumId = #{albumId}
+    </select>
+
+    <select id="selectByTagName" resultType="map">
+        SELECT
+            b.userId 'userId', b.imageId 'imageId', b.imageFileName 'imageFileName',
+            b.updateDateTime 'updateDateTime', b.createDateTime 'createDateTime'
+        FROM x_tag a INNER JOIN x_image b ON a.imageId = b.imageId
+        WHERE a.tagName = #{tagName}
+        and a.userId = #{userId}
     </select>
 
     <select id="selectByImageId" resultType="map">
@@ -35,8 +43,8 @@
     </select>
 
     <insert id="insertImage" parameterType="map" keyColumn="imageId" keyProperty="imageId" useGeneratedKeys="true" >
-        INSERT INTO x_image(userId, imageFileName)
-        VALUES (#{image.userId}, #{image.imageFileName})
+        INSERT INTO x_image(userId, imageFileName, imageInfo)
+        VALUES (#{image.userId}, #{image.imageFileName}, #{image.imageInfo})
     </insert>
 
     <insert id="insertLink" parameterType="map">
@@ -47,13 +55,23 @@
     <delete id="deleteImage" >
         delete from x_image
         where imageId = #{imageId}
+        and userId = #{userId}
     </delete>
 
-    <delete id="deleteLink" >
+    <update id="updateImage" parameterType="map" >
+        update x_image
+        set imageInfo = #{param.imageInfo}
+        where imageId = #{param.imageId}
+    </update>
+
+    <select id="countImageForAlbum" resultType="int">
+        SELECT COUNT(*) 'amount' FROM x_link_album_image WHERE albumId = #{albumId}
+    </select>
+
+    <delete id="deleteLink">
         delete from x_link_album_image
         where imageId = #{imageId}
     </delete>
-
 
 
 </mapper>

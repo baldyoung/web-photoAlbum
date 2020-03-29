@@ -9,9 +9,12 @@ var LabelModule = {
 	},
 	loadData: function(data) {
 		var target = $('#labelDisplayArea');
+		var temp = (data == undefined || data.length == 0) ? '您还没有为图片创建过标签哦^-^' : '';
+		target.html(temp);
 		var i, item, html;
 		for (i = 0; i < data.length; i++) {
 			item = data[i];
+			item.tagId = i;
 			html = LabelModule.createLabelUnitHTML(item);
 			target.append(html);
 		}
@@ -19,8 +22,8 @@ var LabelModule = {
 	createLabelUnitHTML: function(item) {
 		var html = '<button type="button" class="btn btn-default disabled" style="cursor:default; margin-right:5px; ">';
 		html += '<i class="fa fa-tag" style="color:#FFB733; "></i>';
-		html += '<span ondblclick=" ">' + item.labelName + '</span>';
-		html += '<span style="cursor:pointer;" onclick="LabelModule.deleteAction(\'' + item.labelId + '\', \'' + item.labelName + '\')">&times;</span></button>';
+		html += '<span onclick="GlobalMethod.redirectURL(\'/photoAlbum/front/pictures/pictures.html?tagName='+item.tagName+'\')">' + item.tagName + '('+item.amount+')</span>';
+		html += '<span style="cursor:pointer;" onclick="LabelModule.deleteAction(\'' + item.tagId + '\', \'' + item.tagName + '\')">&times;</span></button>';
 		return html;
 	},
 	requestData: function() {
@@ -29,7 +32,7 @@ var LabelModule = {
 			return test_labelList;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "getLabelList",
+			url: GlobalConfig.serverAddress + "/tag/userTag",
 			type: 'GET',
 			cache: false,
 			async: false, //设置同步
@@ -37,7 +40,7 @@ var LabelModule = {
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: {},
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					targetData = data.data;
 				} else {
 					swal({
@@ -83,17 +86,17 @@ var LabelModule = {
 			return;
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "deleteLabel",
+			url: GlobalConfig.serverAddress + "/tag/delete",
 			type: 'POST',
 			cache: false,
 			async: false, //设置同步
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: {
-				labelId: albumId
+				tagName: name
 			},
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					LabelModule.init();
 					swal("删除成功！", "", "success");
 				} else {

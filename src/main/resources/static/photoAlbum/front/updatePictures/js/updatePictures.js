@@ -91,7 +91,7 @@ var Module = {
 			return undefined;
 		}
 		Module.picturesInfo.albumId = albumId;
-		Module.picturesInfo.updateDateTime = $('#updateDateTimeText').val();
+		Module.picturesInfo.imageInfo = $('#updateDateTimeText').val();
 		return Module.picturesInfo;
 	},
 	deleteLabel: function(tId) {
@@ -594,6 +594,7 @@ jQuery(function() {
 		}
 		data = $.extend(data, {
 			albumId: Module.picturesInfo.albumId,
+			imageInfo : Module.picturesInfo.imageInfo,
 			labelList: list,
 			updateDateTime: Module.picturesInfo.updateDateTime
 		});

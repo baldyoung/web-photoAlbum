@@ -16,6 +16,10 @@ var AlbumModule = {
 	},
 	loadData : function(data) {
 		var i, item, html, target = $('#albumDisplayArea');
+		if (undefined == data || data.length == 0) {
+			var k = '还没有相册，快去<a href="../albumManage/albumManage.html">新建</a>几个吧^-^';
+			target.html(k);
+		}
 		for(i=0; i<data.length; i++) {
 			item = data[i];
 			var html = AlbumModule.createAlbumUnitHTML(item);
@@ -24,10 +28,10 @@ var AlbumModule = {
 	},
 	createAlbumUnitHTML : function(albumInfo) {
 		var html = '<li><div style="cursor:pointer; " ondblclick="AlbumModule.seeTheAlbum(\''+albumInfo.albumId+'\')">';
-			html += '<small><p>'+albumInfo.createDateTime+' <i class="fa fa-calendar-plus-o"></i> </p></small>';
+			html += '<small><p>'+albumInfo.updateDateTime+' <i class="fa fa-calendar-plus-o"></i> </p></small>';
 			html += '<h4 onclick="AlbumModule.seeTheAlbum(\''+albumInfo.albumId+'\')">'+albumInfo.albumName+'</h4>';
 			html += '<p>'+albumInfo.albumInfo+'</p>';
-			html += '<a ><i class="fa fa-photo"></i> '+albumInfo.pictureAmount+'</a></div></li>';
+			html += '<a ><i class="fa fa-photo"></i> '+albumInfo.amount+'</a></div></li>';
 		return html;
 	},
 	requestData : function() {

@@ -34,18 +34,52 @@
         and userId = #{userId}
     </delete>
 
+    <delete id="deleteTagByTagNameAndUserId">
+        delete from x_tag
+        where tagName = #{tagName}
+        and userId = #{userId}
+    </delete>
 
+    <delete id="deleteTagByTagNameAndImageId">
+        delete from x_tag
+        where tagName = #{tagName}
+        and imageId = #{imageId}
+    </delete>
 
-
-
-
+    <delete id="deleteTagByImageId">
+        delete from x_tag
+        where imageId = #{imageId}
+        and userId = #{userId}
+    </delete>
 
     <select id="selectTagByUserId" resultType="map">
+        SELECT tagName 'tagName', COUNT(*) 'amount'
+        FROM x_tag
+        WHERE userId = #{userId}
+        GROUP BY tagName
+    </select>
+
+    <select id="selectTagByUserIdAndTagName" resultType="map">
         SELECT
         <include refid="tagField"></include>
         FROM x_tag
         where userId = #{userId}
+        and tagName = #{tagName}
     </select>
+
+    <select id="selectByImageIdAndUserId" resultType="map">
+        SELECT
+        <include refid="tagField"></include>
+        FROM x_tag
+        where userId = #{userId}
+        and imageId = #{imageId}
+    </select>
+
+
+
+
+
+
 
 
 

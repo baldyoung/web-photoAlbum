@@ -33,6 +33,18 @@ var AlbumModule = {
 				albumInfo : $('#albumInfo').val()
 			};
 		}
+		if (GlobalMethod.isEmpty(data.albumName)) {
+			swal("相册名称不能为空", "", "error");
+			return undefined;
+		}
+		if (data.albumName.length > 10) {
+			swal("相册名称不能超过10个字", "", "error");
+			return undefined;
+		}
+		if (data.albumInfo.length > 100) {
+			swal("相册简介不能超过100个字", "", "error");
+			return undefined;
+		}
 		return data;
 	},
 	loadData : function(data) {
@@ -79,14 +91,18 @@ var AlbumModule = {
 	},
 	sendData : function() {
 		var newAlbumInfo = AlbumModule.packageData();
+		if (undefined == newAlbumInfo) {
+			return ;
+		}
 		if ("design" == GlobalConfig.currentModel) {
 			console.log(newAlbumInfo);
 			swal('保存成功', '', 'success');
 			GlobalMethod.goBack();
 			return;
 		}
+		var tUrl = ("update" == AlbumModule.status) ? "/album/update" :  "/album/add";
 		$.ajax({
-			url: GlobalConfig.serverAddress + "/album/add",
+			url: GlobalConfig.serverAddress + tUrl,
 			type: 'POST',
 			cache: false,
 			async: false, //设置同步

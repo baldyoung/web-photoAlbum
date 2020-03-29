@@ -17,11 +17,10 @@ import javax.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.baldyoung.photoalbum.common.jo.dto.ResponseResult.*;
+import static com.baldyoung.photoalbum.common.utility.ValueUtility.isEmpty;
 import static com.baldyoung.photoalbum.common.utility.ValueUtility.toInteger;
 
 @RestController
@@ -54,14 +53,14 @@ public class ImageController {
     @PostMapping("add")
     public ResponseResult addImage(HttpSession session,
                                    @RequestParam("albumId") Integer albumId,
-                                   @RequestParam("updateDateTime") String updateDateTime,
+                                   @RequestParam("imageInfo") String imageInfo,
                                    @RequestParam("labelList") List<String> labelList,
                                    @RequestParam("file") MultipartFile multipartFile) {
         Integer userId = toInteger(session.getAttribute("userId"));
         if (null == userId) {
             return defeat("未登录");
         }
-        logger.info("albumId:" + albumId + ", updateDateTime:" + updateDateTime + ", labelList:" + labelList.toString());
+        logger.info("albumId:" + albumId + ", updateDateTime:" + imageInfo + ", labelList:" + labelList.toString());
         String temp = multipartFile.getOriginalFilename();
         temp = temp.substring(temp.lastIndexOf("."));
         logger.info("文件类型:" + temp);
@@ -80,7 +79,7 @@ public class ImageController {
         Map<String, String> newImage = new HashMap();
         newImage.put("userId", String.valueOf(userId));
         newImage.put("albumId", String.valueOf(albumId));
-        newImage.put("imageInfo", String.valueOf(updateDateTime));
+        newImage.put("imageInfo", String.valueOf(imageInfo));
         newImage.put("imageFileName", String.valueOf(imageFileName));
         imageService.addImage(newImage, labelList);
         return success();
@@ -88,19 +87,74 @@ public class ImageController {
 
     @GetMapping("list")
     public ResponseResult getAlbumImageList(HttpSession session,
-                                            @RequestParam("albumId")Integer albumId) {
+                                            @RequestParam(value = "albumId", required = false)Integer albumId,
+                                            @RequestParam(value = "tagName", required = false)String tagName) {
+        if (null == albumId && isEmpty(tagName)) {
+            return success(Arrays.asList());
+        }
         Integer userId = toInteger(session.getAttribute("userId"));
         if (null == userId) {
             return defeat("未登录");
         }
-        Map albumInfo = albumService.getAlbumInfo(albumId);
-        if (null == albumInfo) {
-            return defeat("无效相册");
+        Map albumInfo;
+        if (null != albumId) {
+            albumInfo = albumService.getAlbumInfo(albumId);
+            if (null == albumInfo) {
+                return defeat("无效相册");
+            }
+            Integer aUserId = toInteger(albumInfo.get("userId"));
+            if (!userId.equals(aUserId)) {
+                return defeat("无效相册");
+            }
+            albumInfo.put("imageList", imageService.getImageListFromAlbum(albumId));
+        } else {
+            albumInfo = new HashMap();
+            albumInfo.put("albumName", tagName);
+            albumInfo.put("imageList", imageService.getImageListByTagName(tagName, userId));
         }
-        Integer aUserId = toInteger(albumInfo.get("userId"));
-        if (!userId.equals(aUserId)) {
-            return defeat("无效相册");
+        return success(albumInfo);
+    }
+
+    @GetMapping("imageInfo")
+    public ResponseResult getImageInfo(HttpSession session,
+                                       @RequestParam("imageId")Integer imageId) {
+        Integer userId = toInteger(session.getAttribute("userId"));
+        if (null == userId) {
+            return defeat("未登录");
         }
-        return success(imageService.getImageListFromAlbum(albumId));
+        return success(imageService.getImageInfo(imageId, userId));
+    }
+
+
+    @PostMapping("delete")
+    public ResponseResult deleteImage(HttpSession session,
+                                      @RequestParam("imageId")Integer imageId) {
+        Integer userId = toInteger(session.getAttribute("userId"));
+        if (null == userId) {
+            return defeat("未登录");
+        }
+        imageService.deleteImage(imageId, userId);
+        return success();
+    }
+
+    @PostMapping("update")
+    public ResponseResult updateImage(HttpSession session,
+                                      @RequestParam("imageId")Integer imageId,
+                                      @RequestParam("imageInfo") String imageInfo,
+                                      @RequestParam(value = "tagList[]", required = false) List<String> tagList) {
+        Integer userId = toInteger(session.getAttribute("userId"));
+        if (null == userId) {
+            return defeat("未登录");
+        }
+        Map aImageInfo = imageService.getImageInfo(imageId, userId);
+        if (null == aImageInfo || null == aImageInfo.get("imageId")) {
+            return defeat("无效资源");
+        }
+        aImageInfo.put("imageInfo", imageInfo);
+        Map<String, String> param = new HashMap();
+        param.put("imageId", String.valueOf(imageId));
+        param.put("imageInfo", imageInfo);
+        imageService.update(param, tagList, userId, imageId);
+        return success();
     }
 }

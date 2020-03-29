@@ -11,9 +11,11 @@ var AlbumModule = {
 	loadData: function(data) {
 		var target = $('#addAlbumBtn');
 		var i, item, html;
+		// target.html('');
+		$('.albumX').remove();
 		for (i = 0; i < data.length; i++) {
 			item = data[i];
-			html = '<div class="col-sm-3">';
+			html = '<div class="col-sm-3 albumX">';
 			html += '<div class="album-div" >';
 			html += '<p><i onclick="AlbumModule.deleteAlbum(\'' + item.albumId + '\', \''+item.albumName+'\')" class="fa fa-trash-o toRight cursorPointer"></i>';
 			html += '<i  onclick="GlobalMethod.redirectURL(\'../addOrUpdateAlbum/addOrUpdateAlbum.html?id=' + item.albumId + '\')" class="fa fa-pencil-square optionItem"></i></p>';
@@ -88,6 +90,7 @@ var AlbumModule = {
 						success: function(data) {
 							if (data.code == '0') {
 								AlbumModule.init();
+								// location.reload();
 								swal("删除成功！", "", "success");
 							} else {
 								swal({

@@ -17,6 +17,18 @@ public interface TagDao {
 
     void deleteTag(@Param("tagId")Integer tagId, @Param("userId")Integer userId);
 
+    void deleteTagByTagNameAndUserId(@Param("tagName")String tagName, @Param("userId")Integer userId);
+
+    void deleteTagByTagNameAndImageId(@Param("tagName")String tagName, @Param("imageId")Integer imageId);
+
+    void deleteTagByImageId(@Param("imageId")Integer imageId, @Param("userId")Integer userId);
+
+    List<Map> selectTagByUserId(@Param("userId")Integer userId);
+
+    //List<Map> selectTagByUserIdAndTagName(@Param("userId")Integer userId);
+
+
+
 
     // List<Map> selectTagWithCondition(@Param("param")Map<String, String> param);
 

@@ -23,8 +23,12 @@ var OptionModule = {
 	loadData : function(data) {
 		var target = $('#pictureDisplayArea');
 		var i, item, html;
+		var albumInfo = data;
+		data = albumInfo.imageList;
+		$('#albumNameText').text(albumInfo.albumName);
 		for(i=0; i<data.length; i++) {
 			item = data[i];
+			item.imageInfo = albumInfo.albumName;
 			if (OptionModule.manageBtnStatus == 'see') {
 				html = OptionModule.createSEEPictureUnitHTML(item);
 				target.append(html);
@@ -58,7 +62,8 @@ var OptionModule = {
 			dataType: 'json',
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: {
-				albumId : GlobalMethod.getArgsFromLocationHref("album")
+				albumId : GlobalMethod.getArgsFromLocationHref("album"),
+				tagName : ""+GlobalMethod.getArgsFromLocationHref("tagName")
 			},
 			success: function(data) {
 				if (data.code == '0') {
@@ -89,7 +94,7 @@ var OptionModule = {
 			OptionModule.manageBtnStatus = 'see';
 			
 		}
-		GlobalMethod.replaceURL('?status='+OptionModule.manageBtnStatus);
+		GlobalMethod.replaceURL('?status='+OptionModule.manageBtnStatus+"&album="+GlobalMethod.getArgsFromLocationHref("album"));
 		return;
 		// OptionModule.updateUnitDisplayStatus();
 	},

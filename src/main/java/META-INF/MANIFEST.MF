@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Class-Path: mysql-connector-java-5.1.47.jar spring-context-5.0.9.RELEA
+ SE.jar jackson-annotations-2.9.0.jar javax.mail.jar validation-api-2.
+ 0.1.Final.jar spring-boot-starter-tomcat-2.0.5.RELEASE.jar tomcat-emb
+ ed-core-8.5.34.jar tomcat-embed-el-8.5.34.jar spring-boot-starter-jso
+ n-2.0.5.RELEASE.jar snakeyaml-1.19.jar jackson-datatype-jdk8-2.9.6.ja
+ r spring-beans-5.0.9.RELEASE.jar log4j-api-2.10.0.jar spring-jdbc-5.0
+ .9.RELEASE.jar logback-core-1.2.3.jar spring-tx-5.0.9.RELEASE.jar spr
+ ing-webmvc-5.0.9.RELEASE.jar spring-aop-5.0.9.RELEASE.jar spring-expr
+ ession-5.0.9.RELEASE.jar jboss-logging-3.3.2.Final.jar javax.annotati
+ on-api-1.3.2.jar logback-classic-1.2.3.jar spring-boot-starter-2.0.5.
+ RELEASE.jar classmate-1.3.4.jar jul-to-slf4j-1.7.25.jar mybatis-sprin
+ g-1.3.2.jar slf4j-api-1.7.25.jar mybatis-3.4.6.jar spring-boot-devtoo
+ ls-2.0.5.RELEASE.jar tomcat-embed-websocket-8.5.34.jar spring-boot-st
+ arter-web-2.0.5.RELEASE.jar spring-web-5.0.9.RELEASE.jar spring-boot-
+ 2.0.5.RELEASE.jar spring-jcl-5.0.9.RELEASE.jar hibernate-validator-6.
+ 0.12.Final.jar jackson-module-parameter-names-2.9.6.jar jackson-datat
+ ype-jsr310-2.9.6.jar mybatis-spring-boot-starter-1.3.2.jar jackson-co
+ re-2.9.6.jar log4j-to-slf4j-2.10.0.jar spring-core-5.0.9.RELEASE.jar 
+ HikariCP-2.7.9.jar spring-boot-starter-logging-2.0.5.RELEASE.jar myba
+ tis-spring-boot-autoconfigure-1.3.2.jar spring-boot-starter-jdbc-2.0.
+ 5.RELEASE.jar spring-boot-autoconfigure-2.0.5.RELEASE.jar jackson-dat
+ abind-2.9.6.jar
+Main-Class: com.baldyoung.photoalbum.PhotoAlbumApplication
+

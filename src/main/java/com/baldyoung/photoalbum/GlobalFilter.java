@@ -43,14 +43,14 @@ public class GlobalFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
-        session.setAttribute("userId", 1002);
+        //session.setAttribute("userId", 1002);
         if (null == session.getAttribute("userId")) {
             String url = httpServletRequest.getRequestURI();
-            if (url.equals("") || url.equals("/") || url.contains("login") || url.contains("common")) {
+            if (url.equals("") || url.equals("/") || url.contains("login") || url.contains("common") || url.contains("forgetPWD") || url.contains("register") || url.contains("requestRegisterVerifyCode")) {
             } else {
                 logger.warn("photoAlbum >>> 非法访问["+url+"]");
-                //httpServletResponse.sendRedirect("/photoAlbum/front/login/login.html");
-                //return;
+                httpServletResponse.sendRedirect("/photoAlbum/front/login/login.html");
+                return;
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);

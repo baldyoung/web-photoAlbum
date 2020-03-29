@@ -86,9 +86,9 @@ var LoginModule = {
 var OptionModule = {
 	forgetPWD: function() {
 		var userInfo = {
-			account: $('#accountText').val()
+			user: $('#accountText').val()
 		};
-		if (GlobalMethod.isEmpty(userInfo.account)) {
+		if (GlobalMethod.isEmpty(userInfo.user)) {
 			swal({
 				title: '请先输入您的用户名',
 				text: '',
@@ -107,7 +107,7 @@ var OptionModule = {
 
 		}
 		$.ajax({
-			url: GlobalConfig.serverAddress + "forgetPWD",
+			url: GlobalConfig.serverAddress + "/user/forgetPWD",
 			type: 'POST',
 			cache: false,
 			//async: false, //设置同步
@@ -115,7 +115,7 @@ var OptionModule = {
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: userInfo,
 			success: function(data) {
-				if (data.result == 'success') {
+				if (data.code == '0') {
 					swal({
 						title: "通知成功",
 						text: "您的密码已通过邮箱发送给您，请注意查收！",

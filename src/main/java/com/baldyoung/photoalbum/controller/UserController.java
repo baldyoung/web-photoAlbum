@@ -30,7 +30,7 @@ public class UserController {
     private EmailServiceImpl emailService;
 
     /**
-     * 发送用户注册
+     * 发送用户注册验证码
      * @param receiverEmail
      * @return
      */
@@ -39,15 +39,18 @@ public class UserController {
                                                  HttpSession session) {
         Date lastDate = toDate(session.getAttribute("r_vc_dt"));
         if (null != lastDate) {
+            System.currentTimeMillis();
             Date nowDate = new Date();
-            Long minute = (lastDate.getTime() - nowDate.getTime()) / 60000;
-            if (minute < 1) {
+            Long minute = (nowDate.getTime() - lastDate.getTime()) / 1000;
+            //System.out.println(""+lastDate.getTime()+", "+nowDate.getTime()+", "+minute);
+            if (minute < 60) {
                 return defeat("60秒内只能发送一次邮件");
             }
         }
         String verifyCode = ucm.getUniqueCode();
-        String content = String.format("欢迎您加入【备忘相册】，您的注册验证码为【%s】。", verifyCode);
-        if (emailService.sendEmail(receiverEmail, content, "【备忘相册】-注册验证码")) {
+        verifyCode = verifyCode.substring(0, 4);
+        String content = String.format("测试-验证码【%s】。", verifyCode);
+        if (emailService.sendEmail(receiverEmail, content, "【备忘相册】测试")) {
             session.setAttribute("r_vc", verifyCode);
             session.setAttribute("r_vc_dt", new Date());
             return success();
@@ -164,6 +167,26 @@ public class UserController {
             return defeat("未登录");
         }
         return success(userService.getUserInfo(userId));
+    }
+
+    @PostMapping("forgetPWD")
+    public ResponseResult forgetPWD(@RequestParam("user")String user,
+                                    HttpSession session) {
+        Date lastDate = toDate(session.getAttribute("z_vc_dt"));
+        if (null != lastDate) {
+            Date nowDate = new Date();
+            Long minute = (nowDate.getTime() - lastDate.getTime()) / 1000;
+            if (minute < 60) {
+                return defeat("60秒内只能发送一次邮件");
+            }
+        }
+        Map userInfo = userService.getUserInfo(user);
+        if (null == userInfo) {
+            return defeat("发送失败，无效账号");
+        }
+        emailService.sendEmail(String.valueOf(userInfo.get("userEmail")), "测试-旧密码："+String.valueOf(userInfo.get("userPassword")), "【备忘相册】测试");
+        session.setAttribute("z_vc_dt", new Date());
+        return success();
     }
 
 

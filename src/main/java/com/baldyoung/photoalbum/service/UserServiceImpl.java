@@ -76,6 +76,24 @@ public class UserServiceImpl {
         return userDao.selectWithCondition(param);
     }
 
+    public Map getUserInfo(String accountOrEmail) {
+        Map<String, String> param = new HashMap();
+        param.put("userAccount", accountOrEmail);
+        Map userInfo = userDao.selectWithCondition(param);
+        if (null != userInfo && null != userInfo.get("userPassword")) {
+            String correctPassword = String.valueOf(userInfo.get("userPassword"));
+            return userInfo;
+        }
+        param.remove("userAccount");
+        param.put("userEmail", accountOrEmail);
+        userInfo = userDao.selectWithCondition(param);
+        if (null != userInfo && null != userInfo.get("userPassword")) {
+            String correctPassword = String.valueOf(userInfo.get("userPassword"));
+            return userInfo;
+        }
+        return null;
+    }
+
 
 
 

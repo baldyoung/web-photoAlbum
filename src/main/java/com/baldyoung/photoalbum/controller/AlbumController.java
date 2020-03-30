@@ -112,6 +112,7 @@ public class AlbumController {
         Map<String, String> param = new HashMap();
         param.put("albumName", albumName);
         param.put("albumInfo", albumInfo);
+        param.put("albumId", String.valueOf(albumId));
         albumService.update(param);
         return success();
     }

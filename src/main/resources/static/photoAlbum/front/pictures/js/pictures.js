@@ -94,8 +94,18 @@ var OptionModule = {
 			OptionModule.manageBtnStatus = 'see';
 			
 		}
-		GlobalMethod.replaceURL('?status='+OptionModule.manageBtnStatus+"&album="+GlobalMethod.getArgsFromLocationHref("album"));
-		return;
+		var tUrl = '?status='+OptionModule.manageBtnStatus;
+		var album = GlobalMethod.getArgsFromLocationHref("album");
+		var tagName = GlobalMethod.getArgsFromLocationHref("tagName");
+		if (undefined != album) {
+			tUrl += '&album='+album;
+		}
+		if (undefined != tagName) {
+			tUrl += '&tagName='+tagName;
+		}
+		GlobalMethod.replaceURL(tUrl);
+		// GlobalMethod.replaceURL('?status='+OptionModule.manageBtnStatus+"&album="+GlobalMethod.getArgsFromLocationHref("album")+"&tagName="+GlobalMethod.getArgsFromLocationHref("tagName"));
+		// return;
 		// OptionModule.updateUnitDisplayStatus();
 	},
 	updateUnitDisplayStatus : function() {

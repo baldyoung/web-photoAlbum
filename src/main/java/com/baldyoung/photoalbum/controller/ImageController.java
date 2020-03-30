@@ -42,8 +42,9 @@ public class ImageController {
 
     private String getImagePath() {
         if (null == imagePath) {
-            String projectPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
-            imagePath = projectPath + File.separator + config.imagePath.replace(".", File.separator) + File.separator;
+            // String projectPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
+            // imagePath = projectPath + File.separator + config.imagePath.replace(".", File.separator) + File.separator;
+            imagePath = "static"+File.separator+config.imagePath.replace(".", File.separator) + File.separator;
             imagePath = FileDataSaveModule.adjustPathNameSeparator(imagePath);
             logger.info("文件存储路径初始化:" + imagePath);
         }

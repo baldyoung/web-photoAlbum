@@ -31,6 +31,9 @@ public class UserServiceImpl {
                 return userInfo;
             }
         }
+        if (true) {
+            return null;
+        }
         param.remove("userAccount");
         param.put("userEmail", accountOrEmail);
         userInfo = userDao.selectWithCondition(param);

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 
 import static com.baldyoung.photoalbum.common.jo.dto.ResponseResult.*;
@@ -44,13 +45,16 @@ public class ImageController {
 
     private String getImagePath() {
         if (null == imagePath) {
-            // 如果是idea中开发运行，请使用下面这两行代码生成存储路径
-            String projectPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
-            imagePath = projectPath + File.separator + config.imagePath.replace(".", File.separator) + File.separator;
-            // -----------------------------------------------------------------------------------------------------------------
-            // 如果是生产环境运行，请将jar中的“static目录”复制到jar同级的目录下
-            // imagePath = "static"+File.separator+config.imagePath.replace(".", File.separator) + File.separator;
-            // -----------------------------------------------------------------------------------------------------------------
+
+            URL url = ClassUtils.getDefaultClassLoader().getResource("static");
+            if (url != null) {
+                // 如果是idea中开发运行，请使用下面这两行代码生成存储路径
+                String projectPath = url.getPath();
+                imagePath = projectPath + File.separator + config.imagePath.replace(".", File.separator) + File.separator;
+            } else {
+                // 如果是生产环境运行，请将jar中的“static目录”复制到jar同级的目录下
+                imagePath = "static"+File.separator+config.imagePath.replace(".", File.separator) + File.separator;
+            }
             imagePath = FileDataSaveModule.adjustPathNameSeparator(imagePath);
             logger.info("文件存储路径初始化:" + imagePath);
         }

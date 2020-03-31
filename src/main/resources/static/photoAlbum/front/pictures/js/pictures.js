@@ -40,13 +40,25 @@ var OptionModule = {
 		
 	},
 	createSEEPictureUnitHTML : function(item) {
-		var html = '<a href="../../common/resource/Img/'+item.imageFileName+'" title="'+item.imageInfo+'" data-gallery="">';
-			html += '<img src="../../common/resource/Img/'+item.imageFileName+'"></a>';
+		var temp = item.imageFileName;
+		var html = '<a href="../../common/resource/Img/'+item.imageFileName+'" title="'+item.imageInfo+'" data-gallery="" ';
+			if ((temp.indexOf("mp4") != -1)|| (temp.indexOf("MP4") != -1)) {
+				html += 'type="video/mp4" >';
+				html += '<img src="../../common/resource/Img/videoImg.jpg"></a>';
+			} else {
+				html += '>';
+				html += '<img src="../../common/resource/Img/'+item.imageFileName+'"></a>';
+			}
 		return html;
 	},
 	createMNGPictureUnitHTML : function(item) {
+		var temp = item.imageFileName;
 		var html = '<a href="../pictureDetails/pictureDetails.html?picture='+item.imageId+'" title="'+item.imageInfo+'" >';
+		if ((temp.indexOf("mp4") != -1)|| (temp.indexOf("MP4") != -1)) {
+			html += '<img src="../../common/resource/Img/videoImg.jpg"></a>';
+		} else {
 			html += '<img src="../../common/resource/Img/'+item.imageFileName+'"></a>';
+		}
 		return html;
 	},
 	requestData : function() {

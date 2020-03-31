@@ -21,10 +21,11 @@ var Module = {
 	},
 	loadData: function(data) {
 		Module.pictureInfo = data;
-		//data.labelList = data.tagList;
-		//var temp = data.imageInfo;
-		//data.imageInfo = (undefined != temp) ? temp.substring(0, 10) : "";
-		$('#pictureURL').attr('src', GlobalConfig.pictureRelativePath + data.imageFileName);
+		var temp = data.imageFileName;
+		if ((temp.indexOf("mp4") != -1)|| (temp.indexOf("MP4") != -1)) {
+			temp = "videoImg.jpg";
+		}
+		$('#pictureURL').attr('src', GlobalConfig.pictureRelativePath + temp);
 		$('#updateDateTimeText').val(data.imageInfo);
 		var i, item, html;
 		if (data.labelList == undefined) data.labelList = [];
@@ -183,39 +184,57 @@ var Module = {
 			})
 			return;
 		}
-		$.ajax({
-			url: GlobalConfig.serverAddress + "/image/delete",
-			type: 'POST',
-			cache: false,
-			async: false, //设置同步
-			dataType: 'json',
-			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: {
-				imageId: Module.pictureInfo.imageId
+		swal({
+				title: "您确定要删除吗?",
+				text: "删除后将不可恢复",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				closeOnConfirm: false,
+				closeOnCancel: false
 			},
-			success: function(data) {
-				if (data.code == '0') {
-					swal({
-						title: '删除成功',
-						type: 'success'
-					})
-					GlobalMethod.goBack();
-				} else {
-					swal({
-						title: "删除标签失败",
-						text: data.desc,
-						type: "error"
+			function(isConfirm) {
+				if (isConfirm) {
+					$.ajax({
+						url: GlobalConfig.serverAddress + "/image/delete",
+						type: 'POST',
+						cache: false,
+						async: false, //设置同步
+						dataType: 'json',
+						contentType: "application/x-www-form-urlencoded;charset=utf-8",
+						data: {
+							imageId: Module.pictureInfo.imageId
+						},
+						success: function(data) {
+							if (data.code == '0') {
+								swal({
+									title: '删除成功',
+									type: 'success'
+								})
+								GlobalMethod.goBack();
+							} else {
+								swal({
+									title: "删除标签失败",
+									text: data.desc,
+									type: "error"
+								});
+							}
+						},
+						error: function() {
+							swal({
+								title: "服务器连接失败",
+								text: "请检查网络是否通畅！",
+								type: "warning"
+							});
+						}
 					});
+				} else {
+					swal("已取消", "您取消了删除操作！", "error");
 				}
-			},
-			error: function() {
-				swal({
-					title: "服务器连接失败",
-					text: "请检查网络是否通畅！",
-					type: "warning"
-				});
-			}
-		});
+			});
+
 	}
 }
 

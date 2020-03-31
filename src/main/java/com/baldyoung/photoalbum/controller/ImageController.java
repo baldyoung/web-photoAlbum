@@ -38,17 +38,33 @@ public class ImageController {
     @Autowired
     private AlbumServiceImpl albumService;
 
+    private String[] acceptFileTypeArray = {".gif", ".jpg", ".jpeg", ".bmp", ".png", ".mp4"};
+
     private String imagePath;
 
     private String getImagePath() {
         if (null == imagePath) {
-            // String projectPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
-            // imagePath = projectPath + File.separator + config.imagePath.replace(".", File.separator) + File.separator;
-            imagePath = "static"+File.separator+config.imagePath.replace(".", File.separator) + File.separator;
+            // 如果是idea中开发运行，请使用下面这两行代码生成存储路径
+            String projectPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
+            imagePath = projectPath + File.separator + config.imagePath.replace(".", File.separator) + File.separator;
+            // -----------------------------------------------------------------------------------------------------------------
+            // 如果是生产环境运行，请将jar中的“static目录”复制到jar同级的目录下
+            // imagePath = "static"+File.separator+config.imagePath.replace(".", File.separator) + File.separator;
+            // -----------------------------------------------------------------------------------------------------------------
             imagePath = FileDataSaveModule.adjustPathNameSeparator(imagePath);
             logger.info("文件存储路径初始化:" + imagePath);
         }
         return imagePath;
+    }
+
+    private boolean isAcceptFileType(String fileType) {
+        fileType = fileType.toLowerCase();
+        for(String type : acceptFileTypeArray) {
+            if (type.equals(type)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @PostMapping("add")
@@ -64,12 +80,18 @@ public class ImageController {
         logger.info("albumId:" + albumId + ", updateDateTime:" + imageInfo + ", labelList:" + labelList.toString());
         String temp = multipartFile.getOriginalFilename();
         temp = temp.substring(temp.lastIndexOf("."));
+        temp = temp.toLowerCase();
         logger.info("文件类型:" + temp);
+        if (!isAcceptFileType(temp)) {
+            logger.warn("非法文件类型:"+temp);
+            return defeat("暂时支持的文件类型为:"+acceptFileTypeArray.toString());
+        }
         temp = FileDataSaveModule.getUniqueIdentification("", temp);
         String imageFileName = temp;
         logger.info("新文件名称:" + temp);
         temp = getImagePath() + temp;
         logger.info("文件存储路径." + temp);
+
         try {
             FileDataSaveModule fileDataSaveModule = new FileDataSaveModule(multipartFile.getInputStream(), temp);
             fileDataSaveModule.save();

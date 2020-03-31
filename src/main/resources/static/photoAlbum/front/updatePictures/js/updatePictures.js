@@ -214,8 +214,9 @@ jQuery(function() {
 
 		accept: {
 			title: 'Images',
-			extensions: 'gif,jpg,jpeg,bmp,png',
-			mimeTypes: 'image/*'
+			extensions: 'gif,jpg,jpeg,bmp,png,mp4',
+//			mimeTypes: 'image/*'
+            mimeTypes: '*'
 		},
 
 		// swf文件路径
@@ -223,12 +224,13 @@ jQuery(function() {
 
 		disableGlobalDnd: true,
 
-		chunked: true,
+        chunked: false, //是否要分片处理大文件上传
+        // chunkSize:2*1024*1024, //分片上传，每片2M，默认是5M
 		// server: 'http://webuploader.duapp.com/server/fileupload.php',
 		server: GlobalConfig.serverAddress + '/image/add',
-		fileNumLimit: 300,
+		fileNumLimit: 15,
 		fileSizeLimit: 50 * 1024 * 1024, // 200 M
-		fileSingleSizeLimit: 10 * 1024 * 1024 // 50 M
+		fileSingleSizeLimit: 20 * 1024 * 1024 // 50 M
 	});
 
 	uploaderX = uploader;
@@ -602,7 +604,16 @@ jQuery(function() {
 
 	uploader.onError = function(code) {
 		// ------------------------------------------------------ 出错后会被调用
-		alert('Eroor: ' + code);
+		if (code == "Q_EXCEED_SIZE_LIMIT") {
+			swal("上传文件大小，总计不能超过50Mb", "", "error");
+		} else if (code == " F_EXCEED_SIZE") {
+			swal("单个文件的大小不能超过20Mb", "", "error");
+		} else if (code == "Q_TYPE_DENIED") {
+			swal("不支持上传该类型文件", "请选择[gif,jpg,jpeg,bmp,png,mp4]类型的文件", "error");
+		} else {
+			swal("文件限制", ""+code, "error");
+		}
+
 	};
 
 	$upload.on('click', function() {

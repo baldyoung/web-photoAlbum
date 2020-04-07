@@ -15,11 +15,8 @@ public class PhotoAlbumApplication {
         SpringApplication.run(PhotoAlbumApplication.class, args);
     }
 
-
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.
-                addResourceHandler("/static/**").
-                addResourceLocations("classpath:/static/","file:static/");
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/","file:static/");
     }
 
 }

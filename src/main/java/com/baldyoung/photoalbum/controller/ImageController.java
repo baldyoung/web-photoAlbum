@@ -24,6 +24,9 @@ import static com.baldyoung.photoalbum.common.jo.dto.ResponseResult.*;
 import static com.baldyoung.photoalbum.common.utility.ValueUtility.isEmpty;
 import static com.baldyoung.photoalbum.common.utility.ValueUtility.toInteger;
 
+/**
+ * 图片 - 后端接口
+ */
 @RestController
 @RequestMapping("image")
 public class ImageController {
@@ -43,9 +46,12 @@ public class ImageController {
 
     private String imagePath;
 
+    /**
+     * 获取照片存储路径
+     * @return
+     */
     private String getImagePath() {
         if (null == imagePath) {
-
             URL url = ClassUtils.getDefaultClassLoader().getResource("static");
             if (url != null) {
                 // 如果是idea中开发运行，请使用下面这两行代码生成存储路径
@@ -61,6 +67,11 @@ public class ImageController {
         return imagePath;
     }
 
+    /**
+     * 检查给的的文件类型是否为合法类型
+     * @param fileType
+     * @return
+     */
     private boolean isAcceptFileType(String fileType) {
         fileType = fileType.toLowerCase();
         for(String type : acceptFileTypeArray) {
@@ -71,6 +82,15 @@ public class ImageController {
         return false;
     }
 
+    /**
+     * 新增照片
+     * @param session
+     * @param albumId
+     * @param imageInfo
+     * @param labelList
+     * @param multipartFile
+     * @return
+     */
     @PostMapping("add")
     public ResponseResult addImage(HttpSession session,
                                    @RequestParam("albumId") Integer albumId,
@@ -112,6 +132,13 @@ public class ImageController {
         return success();
     }
 
+    /**
+     * 获取指定相册或指定标签下的所有用户照片
+     * @param session
+     * @param albumId
+     * @param tagName
+     * @return
+     */
     @GetMapping("list")
     public ResponseResult getAlbumImageList(HttpSession session,
                                             @RequestParam(value = "albumId", required = false)Integer albumId,
@@ -142,6 +169,12 @@ public class ImageController {
         return success(albumInfo);
     }
 
+    /**
+     * 获取指定照片的详细信息
+     * @param session
+     * @param imageId
+     * @return
+     */
     @GetMapping("imageInfo")
     public ResponseResult getImageInfo(HttpSession session,
                                        @RequestParam("imageId")Integer imageId) {
@@ -152,7 +185,12 @@ public class ImageController {
         return success(imageService.getImageInfo(imageId, userId));
     }
 
-
+    /**
+     * 删除指定相片
+     * @param session
+     * @param imageId
+     * @return
+     */
     @PostMapping("delete")
     public ResponseResult deleteImage(HttpSession session,
                                       @RequestParam("imageId")Integer imageId) {
@@ -164,6 +202,14 @@ public class ImageController {
         return success();
     }
 
+    /**
+     * 修改指定照片的信息
+     * @param session
+     * @param imageId
+     * @param imageInfo
+     * @param tagList
+     * @return
+     */
     @PostMapping("update")
     public ResponseResult updateImage(HttpSession session,
                                       @RequestParam("imageId")Integer imageId,

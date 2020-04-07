@@ -1,6 +1,9 @@
 package com.baldyoung.photoalbum.common.jo.dto;
 
-
+/**
+ * 后端接口统一返回结构
+ * @param <T>
+ */
 public class ResponseResult<T> {
 
     public static Integer DefaultSuccessCode = 0;

@@ -17,6 +17,9 @@ import java.util.Map;
 import static com.baldyoung.photoalbum.common.jo.dto.ResponseResult.*;
 import static com.baldyoung.photoalbum.common.utility.ValueUtility.*;
 
+/**
+ * 用户 - 后端接口
+ */
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -159,7 +162,11 @@ public class UserController {
         return success();
     }
 
-
+    /**
+     * 获取当前用户信息
+     * @param session
+     * @return
+     */
     @GetMapping("info")
     public ResponseResult getUserInfo(HttpSession session) {
         Integer userId = toInteger(session.getAttribute("userId"));
@@ -169,6 +176,12 @@ public class UserController {
         return success(userService.getUserInfo(userId));
     }
 
+    /**
+     * 找回当前用户密码
+     * @param user
+     * @param session
+     * @return
+     */
     @PostMapping("forgetPWD")
     public ResponseResult forgetPWD(@RequestParam("user")String user,
                                     HttpSession session) {

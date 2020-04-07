@@ -14,6 +14,9 @@ import static com.baldyoung.photoalbum.common.jo.dto.ResponseResult.*;
 import static com.baldyoung.photoalbum.common.utility.ValueUtility.isEmpty;
 import static com.baldyoung.photoalbum.common.utility.ValueUtility.toInteger;
 
+/**
+ * 相册 - 后端接口
+ */
 @RestController
 @RequestMapping("album")
 public class AlbumController {
